@@ -46,7 +46,7 @@ int GenerateMatrix::red() {
 	Otimizator ot(this->M, this->exp);
 	this->M = ot.optimize();
 
-	this->printMatrix();
+	//this->printMatrix();
 
 	//ContXor contaXor(this->M, ot.getMatchs(), this->max_colum);
 
@@ -60,30 +60,30 @@ int GenerateMatrix::calculateXor(std::map<int, pair<int,int> > matches) {
 		row[i] = -1;
 
 	int rows_size = this->M.n_rows;
-	for (int j = 0; j < rows_size; j++) {
+	arma::Row<int> row_first = this->M.row(0);
+	for(int j= 0 ; j < row_first.size();j++)
+	{
 		int countT = 0;
-		for (int i = this->m - 1; i < this->M.n_cols; i++) {
-			int element = this->M.at(j,i);
-			if(element != -1)
+		int element = row_first[j];
+		if(element != -1)
+		{
+			for(int i = 1 ; i < rows_size;i++)
 			{
-				for (int k = 1; k < rows_size; k++) {
-					int elementToCompare = this->M.at(k, i);
-					if(elementToCompare != -1)
-					{
-						countT = countT + 1;
-					}
+				arma::Row<int> row_to_compare = this->M.row(i);
+				if(row_to_compare[j] !=-1)
+				{
+					countT++;
 				}
-
 			}
-			row[j] = countT;
 		}
+		row[j]= countT;
 	}
 
-	for (int i = this->m - 1; i < this->max_colum; i++){
+	for (int i = this->m-1; i < this->max_colum; i++){
 			int tx = row[i];
 			count = count + tx;
 	}
-	cout << "Count: " << row << endl;
+	//cout << "Count: " << row << endl;
 	count = count + matches.size();
 	return count;
 }
