@@ -10,6 +10,9 @@
 #include <iostream>
 #include <armadillo>
 #include <math.h>
+
+#include "Otimizator.h"
+
 using namespace std;
 using namespace arma;
 
@@ -21,9 +24,15 @@ public:
 	int red();
 private:
 
+	vector<int> getToReduce();
 	void generateMatrix();
 	void reduceFirst();
+	void reduceOthers();
 
+	arma::Row<int> reduce(arma::Row<int> row, int expoent);
+	void cleanMatrix();
+	void removeRepeat();
+	void cleanReduced(int index_row);
 	void printMatrix();
 	int calcNR(int m, int a);
 

@@ -30,9 +30,139 @@ int GenerateMatrix::red() {
 	this->generateMatrix();
 
 	cout << "NR: " << calcNR(this->m, this->a) << endl;
+	int nr = calcNR(this->m, this->a);
 	this->reduceFirst();
+	for (int i = 0; i < nr; i++) {
+		this->reduceOthers();
+	}
+	this->removeRepeat();
+	this->printMatrix();
+	this->cleanMatrix();
+	this->printMatrix();
+	Otimizator ot(this->M, this->exp);
+	this->M = ot.optimize();
+	this->printMatrix();
 
 	return 0;
+}
+
+void GenerateMatrix::reduceOthers() {
+	vector<int> toReduce = this->getToReduce();
+	vector<int>::const_iterator cii;
+	int size = this->M.n_rows;
+	for (cii = toReduce.begin(); cii != toReduce.end(); cii++) {
+		vector<int>::const_iterator expo = this->exp.begin();
+		int index_row = *cii;
+		//cout << "CI: " << (*cii) << endl;
+		expo++;
+		while (expo != this->exp.end()) {
+			int expoent = *expo;
+			//cout << "Expo: " << (*expo) << endl;
+			arma::Row<int> reducedRow = this->reduce(this->M.row(index_row),
+					expoent);
+			this->M.insert_rows(size++, reducedRow);
+			this->printMatrix();
+			expo++;
+		}
+		this->cleanReduced(index_row);
+
+	}
+	this->printMatrix();
+}
+
+void GenerateMatrix::cleanReduced(int index_row) {
+	arma::Row<int> reducedRow = this->M.row(index_row);
+	for (int i = 0; i < this->m - 1; i++) {
+		reducedRow[i] = -1;
+	}
+	this->M.shed_row(index_row);
+	this->M.insert_rows(index_row, reducedRow);
+}
+
+arma::Row<int> GenerateMatrix::reduce(arma::Row<int> rowToReduce, int expoent) {
+	int index = this->max_colum - 1;
+	arma::Row<int> row(this->max_colum);
+	for (int i = 0; i < this->max_colum; i++)
+		row[i] = -1;
+
+	for (int i = this->m - 2; i >= 0; i--) {
+		int element = rowToReduce[i];
+		int indice = index - expoent;
+		//cout << "Indice " << indice << endl;
+		row[indice] = element;
+		index = index - 1;
+	}
+
+	cout << "Row: " << endl;
+	cout << row << endl;
+
+	return row;
+}
+
+vector<int> GenerateMatrix::getToReduce() {
+	vector<int> toReduce;
+	int index = (this->max_colum - 1 - this->m);
+	int rows_size = this->M.n_rows;
+	for (int i = 1; i < rows_size; i++) {
+		arma::Row<int> row = this->M.row(i);
+		if (row[index] != -1)
+			toReduce.push_back(i);
+	}
+	return toReduce;
+}
+
+void GenerateMatrix::removeRepeat() {
+	int rows_size = this->M.n_rows;
+	for (int i = 1; i < rows_size; i++) {
+		arma::Row<int> row = this->M.row(i);
+		int row_size = row.size();
+		for (int j = this->m - 1; j < row_size; j++) {
+			bool found = false;
+			int valueToCompar = row[j];
+			if (valueToCompar != -1) {
+				for (int k = i + 1; k < rows_size; k++) {
+					arma::Row<int> rowToCompare = this->M.row(k);
+					int toCompare = rowToCompare[j];
+					if (toCompare != -1) {
+						if (toCompare == valueToCompar) {
+							row[j] = -1;
+							rowToCompare[j] = -1;
+							found = true;
+						}
+					}
+					this->M.shed_row(k);
+					this->M.insert_rows(k, rowToCompare);
+					if (found){
+						break;
+
+					}
+				}
+			}
+		}
+		this->M.shed_row(i);
+		this->M.insert_rows(i, row);
+	}
+
+}
+
+void GenerateMatrix::cleanMatrix() {
+
+	for (int i = 1; i < this->M.n_rows; i++) {
+		bool allZero = true;
+		arma::Row<int> row = this->M.row(i);
+		int row_size = row.size();
+		for (int j = 0; j < row_size; j++) {
+			if (row[j] != -1) {
+				allZero = false;
+				break;
+			}
+		}
+		if (allZero) {
+			this->M.shed_row(i);
+			//rows_size--;
+		}
+	}
+
 }
 
 void GenerateMatrix::reduceFirst() {
@@ -42,7 +172,7 @@ void GenerateMatrix::reduceFirst() {
 	cii = this->exp.begin();
 	cii++;
 	while (cii != this->exp.end()) {
-		cout << *cii << endl;
+
 		int expoent = *cii;
 		int index = this->max_colum - 1;
 		arma::Row<int> row(this->max_colum);
@@ -52,7 +182,7 @@ void GenerateMatrix::reduceFirst() {
 		for (int i = this->m - 2; i >= 0; i--) {
 			int element = this->M.at(0, i);
 			int indice = index - expoent;
-			cout << "Indice " << indice << endl;
+			//cout << "Indice " << indice << endl;
 			row[indice] = element;
 			index = index - 1;
 		}
@@ -71,10 +201,10 @@ void GenerateMatrix::generateMatrix() {
 
 	for (int i = 0; i < 2 * this->m - 1; i++) {
 		row[i] = value--;
-		cout << value << endl;
+		//cout << value << endl;
 
 	}
-	//row[2 * this->m - 1] = 0;
+//row[2 * this->m - 1] = 0;
 
 	A.insert_rows(0, row);
 

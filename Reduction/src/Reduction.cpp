@@ -23,9 +23,9 @@ int main() {
 	exp.push_back(0);
 
 	GenerateMatrix* matrix = new GenerateMatrix(exp);
-	matrix->red();
+	int result = matrix->red();
 
 
-	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
+	cout << "Result : " << result << endl; // prints !!!Hello World!!!
 	return 0;
 }
