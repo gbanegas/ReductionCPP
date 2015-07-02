@@ -257,7 +257,7 @@ void GenerateMatrix::generateMatrix() {
 }
 
 int GenerateMatrix::calcNR(int m, int a) {
-	int nr = floor((m - 2) / (m - a)) + 1;
+	int nr = floor((m - 2) / (m - a));
 	return nr;
 }
 
