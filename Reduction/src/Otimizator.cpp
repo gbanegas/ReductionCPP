@@ -24,16 +24,16 @@ arma::Mat<int> Otimizator::optimize() {
 			break;
 		}
 		this->changePair(pair);
-		this->printMatrix();
+		//this->printMatrix();
 
 	}
 
-	std::map<int, std::pair<int, int> >::iterator iter;
+	//std::map<int, std::pair<int, int> >::iterator iter;
 
-	for (iter = this->m.begin(); iter != this->m.end(); ++iter) {
-		cout << " variavel " << iter->first << " pair : " << iter->second.first
-				<< "," << iter->second.second << endl;
-	}
+	//for (iter = this->m.begin(); iter != this->m.end(); ++iter) {
+	//	cout << " variavel " << iter->first << " pair : " << iter->second.first
+	//			<< "," << iter->second.second << endl;
+	//}
 
 	return this->M;
 }

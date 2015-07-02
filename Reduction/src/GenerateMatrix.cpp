@@ -40,12 +40,12 @@ int GenerateMatrix::red() {
 		this->reduceOthers();
 	}
 	this->removeRepeat();
-	this->printMatrix();
+	//this->printMatrix();
 	this->cleanMatrix();
-	this->printMatrix();
+	//this->printMatrix();
 	Otimizator ot(this->M, this->exp);
 	this->M = ot.optimize();
-	this->printMatrix();
+	//this->printMatrix();
 
 	ContXor contaXor(this->M, ot.getMatchs());
 
@@ -67,13 +67,13 @@ void GenerateMatrix::reduceOthers() {
 			arma::Row<int> reducedRow = this->reduce(this->M.row(index_row),
 					expoent);
 			this->M.insert_rows(size++, reducedRow);
-			this->printMatrix();
+			//this->printMatrix();
 			expo++;
 		}
 		this->cleanReduced(index_row);
 
 	}
-	this->printMatrix();
+	//this->printMatrix();
 }
 
 void GenerateMatrix::cleanReduced(int index_row) {
@@ -99,8 +99,8 @@ arma::Row<int> GenerateMatrix::reduce(arma::Row<int> rowToReduce, int expoent) {
 		index = index - 1;
 	}
 
-	cout << "Row: " << endl;
-	cout << row << endl;
+	//cout << "Row: " << endl;
+	//cout << row << endl;
 
 	return row;
 }
@@ -196,7 +196,7 @@ void GenerateMatrix::reduceFirst() {
 		row_index++;
 		cii++;
 	}
-	this->printMatrix();
+	//this->printMatrix();
 }
 
 void GenerateMatrix::generateMatrix() {
