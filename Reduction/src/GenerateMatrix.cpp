@@ -45,11 +45,47 @@ int GenerateMatrix::red() {
 	//this->printMatrix();
 	Otimizator ot(this->M, this->exp);
 	this->M = ot.optimize();
-	//this->printMatrix();
 
-	ContXor contaXor(this->M, ot.getMatchs());
+	this->printMatrix();
 
-	return contaXor.n_xor;
+	//ContXor contaXor(this->M, ot.getMatchs(), this->max_colum);
+
+	return this->calculateXor(ot.getMatchs());
+}
+
+int GenerateMatrix::calculateXor(std::map<int, pair<int,int> > matches) {
+	int count = 0;
+	arma::Row<int> row(this->max_colum);
+	for (int i = 0; i < this->max_colum; i++)
+		row[i] = -1;
+
+	int rows_size = this->M.n_rows;
+	for (int j = 0; j < rows_size; j++) {
+		int countT = 0;
+		for (int i = this->m - 1; i < this->M.n_cols; i++) {
+			int element = this->M.at(j,i);
+			if(element != -1)
+			{
+				for (int k = 1; k < rows_size; k++) {
+					int elementToCompare = this->M.at(k, i);
+					if(elementToCompare != -1)
+					{
+						countT = countT + 1;
+					}
+				}
+
+			}
+			row[j] = countT;
+		}
+	}
+
+	for (int i = this->m - 1; i < this->max_colum; i++){
+			int tx = row[i];
+			count = count + tx;
+	}
+	cout << "Count: " << row << endl;
+	count = count + matches.size();
+	return count;
 }
 
 void GenerateMatrix::reduceOthers() {
@@ -138,7 +174,7 @@ void GenerateMatrix::removeRepeat() {
 					}
 					this->M.shed_row(k);
 					this->M.insert_rows(k, rowToCompare);
-					if (found){
+					if (found) {
 						break;
 
 					}

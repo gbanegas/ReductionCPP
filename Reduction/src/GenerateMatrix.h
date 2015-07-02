@@ -37,6 +37,7 @@ private:
 	void cleanReduced(int index_row);
 	void printMatrix();
 	int calcNR(int m, int a);
+	int calculateXor(std::map<int, pair<int,int> > match);
 
 
 	arma::Mat<int> M;

@@ -15,11 +15,12 @@ using namespace std;
 using namespace arma;
 class ContXor {
 public:
-	ContXor(arma::Mat<int> M, std::map<int, pair<int,int> > matches);
+	ContXor(arma::Mat<int> M, std::map<int, pair<int,int> > matches, int max_colum);
 	virtual ~ContXor();
 	int n_xor;
 private:
 	void calculateXor(arma::Mat<int> M, std::map<int, pair<int,int> > matches);
+	int max_column;
 
 
 };
