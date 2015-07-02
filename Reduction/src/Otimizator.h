@@ -26,6 +26,7 @@ private:
 	std::vector<std::pair<int,int> > generatePairs(arma::Col<int> column);
 	std::pair<int,int> generateAllPairs();
 	void changePair(std::pair<int,int> p);
+	void printMatrix();
 	void findAndChange(std::pair<int,int> p);
 	arma::Col<int> removePair(std::pair<int,int> p, arma::Col<int> column);
 	arma::Mat<int> M;

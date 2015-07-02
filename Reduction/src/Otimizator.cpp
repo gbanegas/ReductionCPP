@@ -24,6 +24,7 @@ arma::Mat<int> Otimizator::optimize() {
 			break;
 		}
 		this->changePair(pair);
+		this->printMatrix();
 
 	}
 
@@ -94,7 +95,7 @@ std::pair<int, int> Otimizator::generateAllPairs() {
 		}
 	}
 	std::pair<int, int> toReturn(-1, -1);
-	int index = 0;
+	int index = 1;
 	std::map<std::pair<int, int>, int>::iterator iter;
 
 	for (iter = allPairs.begin(); iter != allPairs.end(); ++iter) {
@@ -126,4 +127,10 @@ vector<std::pair<int, int> > Otimizator::generatePairs(arma::Col<int> column) {
 		}
 	}
 	return result;
+}
+
+void Otimizator::printMatrix() {
+	cout << "Matrix_1: " << endl;
+	cout << this->M << endl;
+	cout << "-----------------" << endl;
 }
