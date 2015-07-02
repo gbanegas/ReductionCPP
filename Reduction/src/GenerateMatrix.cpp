@@ -25,6 +25,10 @@ GenerateMatrix::GenerateMatrix(vector<int> exp) {
 	this->a = this->exp[1];
 	this->max_colum = (2 * this->m) - 1;
 }
+GenerateMatrix::~GenerateMatrix() {
+
+	this->M.clear();
+}
 
 int GenerateMatrix::red() {
 	this->generateMatrix();
@@ -43,7 +47,9 @@ int GenerateMatrix::red() {
 	this->M = ot.optimize();
 	this->printMatrix();
 
-	return 0;
+	ContXor contaXor(this->M, ot.getMatchs());
+
+	return contaXor.n_xor;
 }
 
 void GenerateMatrix::reduceOthers() {

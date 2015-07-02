@@ -129,6 +129,10 @@ vector<std::pair<int, int> > Otimizator::generatePairs(arma::Col<int> column) {
 	return result;
 }
 
+std::map<int, pair<int, int> > Otimizator::getMatchs() {
+	return this->m;
+}
+
 void Otimizator::printMatrix() {
 	cout << "Matrix_1: " << endl;
 	cout << this->M << endl;

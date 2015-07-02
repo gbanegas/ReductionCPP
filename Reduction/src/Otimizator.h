@@ -21,6 +21,8 @@ class Otimizator{
 public:
 	Otimizator(arma::Mat<int> matrix, vector<int> exp);
 	arma::Mat<int> optimize();
+	std::map<int, pair<int,int> > getMatchs();
+
 
 private:
 	std::vector<std::pair<int,int> > generatePairs(arma::Col<int> column);

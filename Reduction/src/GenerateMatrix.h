@@ -12,6 +12,7 @@
 #include <math.h>
 
 #include "Otimizator.h"
+#include "ContXor.h"
 
 using namespace std;
 using namespace arma;
@@ -21,6 +22,7 @@ class GenerateMatrix
 public:
 	GenerateMatrix(int m, int a, int b, int c);
 	GenerateMatrix(vector<int> exp);
+	virtual ~GenerateMatrix();
 	int red();
 private:
 
