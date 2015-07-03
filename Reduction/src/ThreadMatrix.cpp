@@ -1,10 +1,12 @@
 #include "ThreadMatrix.h"
 
 
-ThreadMatrix::ThreadMatrix(arma::Mat<int> matrix, , std::vector<int> exp)
+ThreadMatrix::ThreadMatrix(arma::Mat<int> matrix,std::vector<int> exp)
 {
   this->M = matrix;
   this->exp = exp;
+  this->max_colum = (2 * exp[0]) - 1;
+  this->m = exp[0];
 }
 
 void ThreadMatrix::generateReduced()
@@ -29,11 +31,12 @@ void ThreadMatrix::generateReduced()
 		}
 		this->cleanReduced(index_row);
 	}
+	this->M.shed_row(0);
 }
 
 arma::Mat<int> ThreadMatrix::getM()
 {
-  returh this->M;
+  return this->M;
 }
 
 void ThreadMatrix::cleanReduced(int index_row) {

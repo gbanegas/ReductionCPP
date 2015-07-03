@@ -16,10 +16,10 @@ using namespace arma;
 
 int main() {
 	vector<int> exp;
-	exp.push_back(653);
-	exp.push_back(652);
-	exp.push_back(651);
-	exp.push_back(1);
+	exp.push_back(9);
+	exp.push_back(7);
+	exp.push_back(5);
+	exp.push_back(2);
 	exp.push_back(0);
 
 	GenerateMatrix* matrix = new GenerateMatrix(exp);

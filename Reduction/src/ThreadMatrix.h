@@ -11,19 +11,16 @@
 #include <armadillo>
 #include <math.h>
 
+#include "Thread.h"
+
 using namespace std;
 using namespace arma;
 class ThreadMatrix  : public Thread {
 public:
   void *run() {
-       for (int i = 0; i < 5; i++) {
-           printf("thread %lu running - %d\n",  (long unsigned int)self(), i+1);
-           sleep(2);
-       }
-       printf("thread done %lu\n", (long unsigned int)self());
-       return NULL;
+	  generateReduced();
    }
-  ThreadMatrix(arma::Mat<int> matrix, , std::vector<int> exp);
+  ThreadMatrix(arma::Mat<int> matrix, std::vector<int> exp);
   void generateReduced();
   arma::Mat<int> getM();
 
@@ -36,7 +33,9 @@ private:
 
   arma::Mat<int> M;
   std::vector<int> exp;
-}
+  int max_colum;
+  int m;
+};
 
 
 #endif

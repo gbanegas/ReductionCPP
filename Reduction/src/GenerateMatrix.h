@@ -10,7 +10,7 @@
 #include <iostream>
 #include <armadillo>
 #include <math.h>
-#include <thread>
+
 
 #include "Otimizator.h"
 #include "ContXor.h"
