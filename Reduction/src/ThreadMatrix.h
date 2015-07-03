@@ -13,8 +13,16 @@
 
 using namespace std;
 using namespace arma;
-class ThreadMatrix {
+class ThreadMatrix  : public Thread {
 public:
+  void *run() {
+       for (int i = 0; i < 5; i++) {
+           printf("thread %lu running - %d\n",  (long unsigned int)self(), i+1);
+           sleep(2);
+       }
+       printf("thread done %lu\n", (long unsigned int)self());
+       return NULL;
+   }
   ThreadMatrix(arma::Mat<int> matrix, , std::vector<int> exp);
   void generateReduced();
   arma::Mat<int> getM();

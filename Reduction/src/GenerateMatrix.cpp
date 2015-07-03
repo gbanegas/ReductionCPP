@@ -90,16 +90,16 @@ int GenerateMatrix::calculateXor(std::map<int, pair<int,int> > matches) {
 void GenerateMatrix::reduceOthers() {
 	std::vector<arma::Mat<int> > subMatrix = this->getSubMatrix();
 	std::vector<arma::Mat<int> >::const_iterator cii;
-	std::vector<ThreadMatrix> objs;
-	std::vector<std::thread> th;
+	std::vector<ThreadMatrix*> objs;
+
 	for(cii=subMatrix.begin(); cii != cii.end(); ++cii){
-			ThreadMatrix thre(*cii, this->exp);
-			th.push_back(std::thread(thre.generateReduced()));
+			ThreadMatrix* thre = new ThreadMatrix(*cii, this->exp);
+
 			objs.push_back(thre);
 	}
-	std::vector<std::thread>::const_iterator th_it;
-	for(th_it=th.begin(); th_it != th.end(); ++th_it){
-		*th_it.join();
+	std::vector<ThreadMatrix>::const_iterator th_it;
+	for(th_it=objs.begin(); th_it != objs.end(); ++th_it){
+		*th_it->run();
 	}
 
 
