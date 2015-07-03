@@ -66,7 +66,7 @@ int main() {
 			//cout << re << endl;
 			exp.push_back(atoi(re.c_str()));
 		}
-		//cout << line << '\n';
+		cout << line << '\n';
 
 		exp.push_back(0);
 		resultS += "0]:";
@@ -74,6 +74,7 @@ int main() {
 		int result = matrix->red();
 		resultS += result;
 		writefile << resultS << "\n";
+		cout << resultS  << endl;
 
 		//cout << "Result : " << result << endl;
 	}

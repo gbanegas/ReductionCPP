@@ -20,7 +20,7 @@ public:
   void *run() {
 
 	  generateReduced();
-	  printf("thread done %lu\n", (long unsigned int)self());
+	 // printf("thread done %lu\n", (long unsigned int)self());
 	  return NULL;
    }
   ThreadMatrix(arma::Mat<int> matrix, std::vector<int> exp, int nr);
