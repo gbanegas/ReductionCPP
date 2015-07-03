@@ -29,7 +29,7 @@ arma::Mat<int> Otimizator::optimize() {
 		//this->printMatrix();
 
 	}
-	cout << "optimize... end" << endl;
+	//cout << "optimize... end" << endl;
 
 //	std::map<int, std::pair<int, int> >::iterator iter;
 

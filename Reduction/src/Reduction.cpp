@@ -12,6 +12,11 @@
 
 #include "GenerateMatrix.h"
 
+#include <sstream>
+
+#define SSTR( x ) dynamic_cast< std::ostringstream & >( \
+        ( std::ostringstream() << std::dec << x ) ).str()
+
 using namespace std;
 using namespace arma;
 
@@ -72,7 +77,9 @@ int main() {
 		resultS += "0]:";
 		GenerateMatrix* matrix = new GenerateMatrix(exp);
 		int result = matrix->red();
-		resultS += result;
+		//char *intStr = itoa(result);
+		string str = SSTR(result);
+		resultS += str;
 		writefile << resultS << "\n";
 		cout << resultS  << endl;
 
