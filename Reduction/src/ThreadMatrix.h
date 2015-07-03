@@ -18,9 +18,12 @@ using namespace arma;
 class ThreadMatrix  : public Thread {
 public:
   void *run() {
+
 	  generateReduced();
+	  printf("thread done %lu\n", (long unsigned int)self());
+	  return NULL;
    }
-  ThreadMatrix(arma::Mat<int> matrix, std::vector<int> exp);
+  ThreadMatrix(arma::Mat<int> matrix, std::vector<int> exp, int nr);
   void generateReduced();
   arma::Mat<int> getM();
 
@@ -35,6 +38,7 @@ private:
   std::vector<int> exp;
   int max_colum;
   int m;
+  int nr;
 };
 
 

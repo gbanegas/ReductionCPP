@@ -34,10 +34,10 @@ int GenerateMatrix::red() {
 	this->generateMatrix();
 
 	cout << "NR: " << calcNR(this->m, this->a) << endl;
-	//int nr = calcNR(this->m, this->a);
+	this->nr = calcNR(this->m, this->a);
 	this->reduceFirst();
 	this->reduceOthers();
-
+	cout << "Reduced" << endl;
 	this->removeRepeat();
 	//this->printMatrix();
 	this->cleanMatrix();
@@ -52,7 +52,7 @@ int GenerateMatrix::red() {
 	return this->calculateXor(ot.getMatchs());
 }
 
-int GenerateMatrix::calculateXor(std::map<int, pair<int,int> > matches) {
+int GenerateMatrix::calculateXor(std::map<int, pair<int, int> > matches) {
 	int count = 0;
 	arma::Row<int> row(this->max_colum);
 	for (int i = 0; i < this->max_colum; i++)
@@ -60,27 +60,23 @@ int GenerateMatrix::calculateXor(std::map<int, pair<int,int> > matches) {
 
 	int rows_size = this->M.n_rows;
 	arma::Row<int> row_first = this->M.row(0);
-	for(int j= 0 ; j < row_first.size();j++)
-	{
+	for (int j = 0; j < row_first.size(); j++) {
 		int countT = 0;
 		int element = row_first[j];
-		if(element != -1)
-		{
-			for(int i = 1 ; i < rows_size;i++)
-			{
+		if (element != -1) {
+			for (int i = 1; i < rows_size; i++) {
 				arma::Row<int> row_to_compare = this->M.row(i);
-				if(row_to_compare[j] !=-1)
-				{
+				if (row_to_compare[j] != -1) {
 					countT++;
 				}
 			}
 		}
-		row[j]= countT;
+		row[j] = countT;
 	}
 
-	for (int i = this->m-1; i < this->max_colum; i++){
-			int tx = row[i];
-			count = count + tx;
+	for (int i = this->m - 1; i < this->max_colum; i++) {
+		int tx = row[i];
+		count = count + tx;
 	}
 	//cout << "Count: " << row << endl;
 	count = count + matches.size();
@@ -92,39 +88,41 @@ void GenerateMatrix::reduceOthers() {
 	std::vector<arma::Mat<int> >::const_iterator cii;
 	std::vector<ThreadMatrix*> objs;
 
-	for(cii=subMatrix.begin(); cii != subMatrix.end(); ++cii){
-			ThreadMatrix* thre = new ThreadMatrix(*cii, this->exp);
-			thre->start();
-			objs.push_back(thre);
+	for (cii = subMatrix.begin(); cii != subMatrix.end(); ++cii) {
+		ThreadMatrix* thre = new ThreadMatrix(*cii, this->exp, this->nr);
+		thre->start();
+		objs.push_back(thre);
 	}
-
-	for(int i =0; i < subMatrix.size();i++){
-		while(objs[i]->join() < 0)
-		{
-
-		}
+	for (int i = 0; i < subMatrix.size(); i++) {
+		objs[i]->join();
+	}
+	for (int i = 0; i < subMatrix.size(); i++) {
+		//cout << objs[i]->getM() << endl;
 		this->M.insert_rows(this->M.n_rows, objs[i]->getM());
 	}
 
-	this->printMatrix();
-
-
-
+	cout << "DONE!!" << endl;
+	for (int i = 1; i < this->M.n_rows; i++) {
+		this->cleanReduced(i);
+	}
+	//this->printMatrix();
 
 	//this->printMatrix();
 }
-std::vector<arma::Mat<int> > GenerateMatrix::getSubMatrix(){
+std::vector<arma::Mat<int> > GenerateMatrix::getSubMatrix() {
 	std::vector<arma::Mat<int> > matToReturn;
 	std::vector<arma::Col<int> > cols;
-	for(int i = 0; i < this->M.n_cols;i++ )
-	{
+	for (int i = 0; i < this->M.n_cols; i++) {
 		cols.push_back(this->M.col(i));
 	}
-	for(int i =0; i < this->exp.size();i++){
-		arma::Mat<int> matri = this->M.submat(0,0,0,this->M.n_cols-1);
-		matri.insert_rows(matri.n_rows,this->M.submat(i,0,i,this->M.n_cols-1));
+	//this->printMatrix();
+	for (int i = 1; i < this->M.n_rows - 1; i++) {
+		arma::Mat<int> matri = this->M.submat(i, 0, i, this->M.n_cols - 1);
+		//matri.insert_rows(matri.n_rows);
+		//cout << matri <<endl;
 		matToReturn.push_back(matri);
 	}
+	//this->printMatrix();
 	return matToReturn;
 }
 void GenerateMatrix::cleanReduced(int index_row) {
@@ -185,6 +183,7 @@ void GenerateMatrix::removeRepeat() {
 							row[j] = -1;
 							rowToCompare[j] = -1;
 							found = true;
+							//cout << "Removing... 2" << endl;
 						}
 					}
 					this->M.shed_row(k);
@@ -196,9 +195,11 @@ void GenerateMatrix::removeRepeat() {
 				}
 			}
 		}
+
 		this->M.shed_row(i);
 		this->M.insert_rows(i, row);
 	}
+	cout << "Removing... end" << endl;
 
 }
 
@@ -219,6 +220,7 @@ void GenerateMatrix::cleanMatrix() {
 			//rows_size--;
 		}
 	}
+	cout << "Cleaning... 1" << endl;
 
 }
 

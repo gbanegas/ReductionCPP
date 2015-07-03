@@ -48,6 +48,7 @@ private:
 	int a;
 	vector<int> exp;
 	int max_colum;
+	int nr;
 
 
 };

@@ -15,6 +15,7 @@ Otimizator::Otimizator(arma::Mat<int> matrix, vector<int> exp) {
 }
 
 arma::Mat<int> Otimizator::optimize() {
+	//cout << "optimize... 1" << endl;
 	bool isToStop = false;
 	while (!isToStop) {
 
@@ -24,9 +25,11 @@ arma::Mat<int> Otimizator::optimize() {
 			break;
 		}
 		this->changePair(pair);
+		//cout << "optimize... 2" << endl;
 		//this->printMatrix();
 
 	}
+	cout << "optimize... end" << endl;
 
 //	std::map<int, std::pair<int, int> >::iterator iter;
 
