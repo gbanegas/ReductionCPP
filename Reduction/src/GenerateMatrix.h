@@ -10,9 +10,11 @@
 #include <iostream>
 #include <armadillo>
 #include <math.h>
+#include <thread>
 
 #include "Otimizator.h"
 #include "ContXor.h"
+#include "ThreadMatrix.h"
 
 using namespace std;
 using namespace arma;
@@ -38,6 +40,7 @@ private:
 	void printMatrix();
 	int calcNR(int m, int a);
 	int calculateXor(std::map<int, pair<int,int> > match);
+	std::vector<arma::Mat<int> > getSubMatrix();
 
 
 	arma::Mat<int> M;

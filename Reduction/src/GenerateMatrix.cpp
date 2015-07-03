@@ -36,9 +36,8 @@ int GenerateMatrix::red() {
 	cout << "NR: " << calcNR(this->m, this->a) << endl;
 	int nr = calcNR(this->m, this->a);
 	this->reduceFirst();
-	for (int i = 0; i < nr; i++) {
-		this->reduceOthers();
-	}
+	this->reduceOthers();
+
 	this->removeRepeat();
 	//this->printMatrix();
 	this->cleanMatrix();
@@ -89,29 +88,38 @@ int GenerateMatrix::calculateXor(std::map<int, pair<int,int> > matches) {
 }
 
 void GenerateMatrix::reduceOthers() {
-	vector<int> toReduce = this->getToReduce();
-	vector<int>::const_iterator cii;
-	int size = this->M.n_rows;
-	for (cii = toReduce.begin(); cii != toReduce.end(); cii++) {
-		vector<int>::const_iterator expo = this->exp.begin();
-		int index_row = *cii;
-		//cout << "CI: " << (*cii) << endl;
-		expo++;
-		while (expo != this->exp.end()) {
-			int expoent = *expo;
-			//cout << "Expo: " << (*expo) << endl;
-			arma::Row<int> reducedRow = this->reduce(this->M.row(index_row),
-					expoent);
-			this->M.insert_rows(size++, reducedRow);
-			//this->printMatrix();
-			expo++;
-		}
-		this->cleanReduced(index_row);
-
+	std::vector<arma::Mat<int> > subMatrix = this->getSubMatrix();
+	std::vector<arma::Mat<int> >::const_iterator cii;
+	std::vector<ThreadMatrix> objs;
+	std::vector<std::thread> th;
+	for(cii=subMatrix.begin(); cii != cii.end(); ++cii){
+			ThreadMatrix thre(*cii, this->exp);
+			th.push_back(std::thread(thre.generateReduced()));
+			objs.push_back(thre);
 	}
+	std::vector<std::thread>::const_iterator th_it;
+	for(th_it=th.begin(); th_it != th.end(); ++th_it){
+		*th_it.join();
+	}
+
+
 	//this->printMatrix();
 }
-
+std::vector<arma::Mat<int> > GenerateMatrix::getSubMatrix(){
+	std::vector<arma::Mat<int> > matToReturn;
+	std::vector<int> cols;
+	for(int i = 0; i < this->M.n_cols;i++ )
+	{
+		cols.push_back(i);
+	}
+	for(int i =0; i < this->exp.size();i++){
+		std::vector<int> rows;
+		rows.push_back(0);
+		rows.push_back(i);
+		matToReturn.push_back(this->M.subat(rows, cols));
+	}
+	return matToReturn;
+}
 void GenerateMatrix::cleanReduced(int index_row) {
 	arma::Row<int> reducedRow = this->M.row(index_row);
 	for (int i = 0; i < this->m - 1; i++) {
@@ -266,4 +274,3 @@ void GenerateMatrix::printMatrix() {
 	cout << this->M << endl;
 	cout << "-----------------" << endl;
 }
-
