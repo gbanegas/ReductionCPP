@@ -8,24 +8,77 @@
 
 #include <iostream>
 #include <armadillo>
+#include <fstream>
 
 #include "GenerateMatrix.h"
 
 using namespace std;
 using namespace arma;
 
+std::vector<std::string> &split(const std::string &s, char delim,
+		std::vector<std::string> &elems) {
+	std::stringstream ss(s);
+	std::string item;
+	while (std::getline(ss, item, delim)) {
+		elems.push_back(item);
+	}
+	return elems;
+}
+
+std::vector<std::string> split(const std::string &s, char delim) {
+	std::vector<std::string> elems;
+	split(s, delim, elems);
+	return elems;
+}
+
+std::string removechars(const std::string& source, const std::string& chars) {
+	std::string result = "";
+	for (unsigned int i = 0; i < source.length(); i++) {
+		bool foundany = false;
+		for (unsigned int j = 0; j < chars.length() && !foundany; j++) {
+			foundany = (source[i] == chars[j]);
+		}
+		if (!foundany) {
+			result += source[i];
+		}
+	}
+	return result;
+}
+
 int main() {
-	vector<int> exp;
-	exp.push_back(15);
-	exp.push_back(14);
-	exp.push_back(13);
-	exp.push_back(1);
-	exp.push_back(0);
+	string line;
+	ofstream writefile;
+	writefile.open("result_teste_1.txt");
+	ifstream myfile;
+	myfile.open("pol_1.txt");
+	while (getline(myfile, line)) {
+		std::string resultS;
+		resultS = "[";
+		vector<int> exp;
+		std::vector<std::string> splited = split(line, '+');
+		std::vector<std::string>::const_iterator cii;
+		for (cii = splited.begin(); cii != splited.end() - 1; ++cii) {
+			std::string re = removechars(*cii, "x^ ");
+			if (re.empty())
+				re = "1";
+			resultS += re;
+			resultS += ",";
+			//cout << re << endl;
+			exp.push_back(atoi(re.c_str()));
+		}
+		//cout << line << '\n';
 
-	GenerateMatrix* matrix = new GenerateMatrix(exp);
-	int result = matrix->red();
+		exp.push_back(0);
+		resultS += "0]:";
+		GenerateMatrix* matrix = new GenerateMatrix(exp);
+		int result = matrix->red();
+		resultS += result;
+		writefile << resultS << "\n";
 
+		//cout << "Result : " << result << endl;
+	}
+	writefile.close();
 
-	cout << "Result : " << result << endl; // prints !!!Hello World!!!
+	// prints !!!Hello World!!!
 	return 0;
 }
