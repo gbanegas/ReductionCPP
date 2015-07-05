@@ -56,6 +56,8 @@ int main() {
 	writefile.open("result_teste_1.txt");
 	ifstream myfile;
 	myfile.open("pol_1.txt");
+	std::vector<std::vector<int> > exps;
+	std::map<std::vector<int>, std::string> vector_string;
 	while (getline(myfile, line)) {
 		std::string resultS;
 		resultS = "[";
@@ -75,6 +77,8 @@ int main() {
 
 		exp.push_back(0);
 		resultS += "0]:";
+		exps.push_back(exp);
+		vector_string[exp] = resultS;
 		GenerateMatrix* matrix = new GenerateMatrix(exp);
 		int result = matrix->red();
 		//char *intStr = itoa(result);
