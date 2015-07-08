@@ -23,22 +23,23 @@ public:
 	 // printf("thread done %lu\n", (long unsigned int)self());
 	  return NULL;
    }
-  ThreadMatrix(arma::Mat<int> matrix, std::vector<int> exp, int nr);
-  void generateReduced();
+  ThreadMatrix(arma::Mat<int> matrix, std::vector<int> exp, int nr, int id);
+  inline void generateReduced();
   arma::Mat<int> getM();
 
 private:
-  vector<int> getToReduce();
-  arma::Row<int> reduce(arma::Row<int> row, int expoent);
-  void cleanMatrix();
+  inline vector<int> getToReduce();
+  inline arma::Row<int> reduce(arma::Row<int> row, int expoent);
+  //void cleanMatrix();
   void removeRepeat();
-  void cleanReduced(int index_row);
+  inline void cleanReduced(int index_row);
 
   arma::Mat<int> M;
   std::vector<int> exp;
   int max_colum;
   int m;
   int nr;
+  int id;
 };
 
 

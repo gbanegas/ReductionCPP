@@ -52,6 +52,10 @@ int GenerateMatrix::red() {
 	return this->calculateXor(ot.getMatchs());
 }
 
+/**
+ * Método para calcular o número de XORs
+ */
+
 int GenerateMatrix::calculateXor(std::map<int, pair<int, int> > matches) {
 	int count = 0;
 	arma::Row<int> row(this->max_colum);
@@ -78,7 +82,6 @@ int GenerateMatrix::calculateXor(std::map<int, pair<int, int> > matches) {
 		int tx = row[i];
 		count = count + tx;
 	}
-	//cout << "Count: " << row << endl;
 	count = count + matches.size();
 	return count;
 }
@@ -87,11 +90,25 @@ void GenerateMatrix::reduceOthers() {
 	std::vector<arma::Mat<int> > subMatrix = this->getSubMatrix();
 	std::vector<arma::Mat<int> >::const_iterator cii;
 	std::vector<ThreadMatrix*> objs;
-
+	cout << this->M << endl;
+	int i = 0;
+	/*for (int j = 0; j < 1; j++) {
+	 ThreadMatrix* thre = new ThreadMatrix(subMatrix[0], this->exp, this->nr, i);
+	 thre->start();
+	 objs.push_back(thre);
+	 i++;
+	 }
+	 for (int j = 0; j < 1; j++) {
+	 objs[j]->join();
+	 }
+	 for (int j = 0; j < 1; j++) {
+	 this->M.insert_rows(this->M.n_rows, objs[j]->getM());
+	 }*/
 	for (cii = subMatrix.begin(); cii != subMatrix.end(); ++cii) {
-		ThreadMatrix* thre = new ThreadMatrix(*cii, this->exp, this->nr);
+		ThreadMatrix* thre = new ThreadMatrix(*cii, this->exp, this->nr, i);
 		thre->start();
 		objs.push_back(thre);
+		i++;
 	}
 	for (int i = 0; i < subMatrix.size(); i++) {
 		objs[i]->join();
@@ -168,6 +185,7 @@ vector<int> GenerateMatrix::getToReduce() {
 
 void GenerateMatrix::removeRepeat() {
 	int rows_size = this->M.n_rows;
+
 	for (int i = 1; i < rows_size; i++) {
 		arma::Row<int> row = this->M.row(i);
 		int row_size = row.size();

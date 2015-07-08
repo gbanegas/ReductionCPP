@@ -1,5 +1,4 @@
 /*
-   thread.cpp
    Definition of a Java style thread class in C++.
    ------------------------------------------
    Copyright © 2013  [Vic Hargrave - http://vichargrave.com]

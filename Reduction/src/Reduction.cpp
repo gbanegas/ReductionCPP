@@ -55,7 +55,7 @@ int main() {
 	ofstream writefile;
 	writefile.open("result_teste_1.txt");
 	ifstream myfile;
-	myfile.open("pol_1.txt");
+	myfile.open("thefile.txt");
 	std::vector<std::vector<int> > exps;
 	std::map<std::vector<int>, std::string> vector_string;
 	while (getline(myfile, line)) {

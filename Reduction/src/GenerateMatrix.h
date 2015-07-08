@@ -13,7 +13,7 @@
 
 
 #include "Otimizator.h"
-#include "ContXor.h"
+
 #include "ThreadMatrix.h"
 
 using namespace std;
