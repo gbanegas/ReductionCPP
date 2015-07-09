@@ -11,6 +11,8 @@
 #include <armadillo>
 #include <math.h>
 
+#include "ReductionMatrixThread.h"
+#include "ExpThread.h"
 #include "Thread.h"
 
 using namespace std;
