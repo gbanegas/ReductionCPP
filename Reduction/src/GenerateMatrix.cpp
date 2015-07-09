@@ -33,7 +33,7 @@ GenerateMatrix::~GenerateMatrix() {
 int GenerateMatrix::red() {
 	this->generateMatrix();
 
-	//cout << "NR: " << calcNR(this->m, this->a) << endl;
+	cout << "NR: " << calcNR(this->m, this->a) << endl;
 	this->nr = calcNR(this->m, this->a);
 	this->reduceFirst();
 	this->reduceOthers();

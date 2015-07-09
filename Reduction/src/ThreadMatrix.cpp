@@ -18,34 +18,39 @@ ThreadMatrix::ThreadMatrix(arma::Mat<int> matrix, std::vector<int> exp, int nr,
  * Geração da redução de cada matrix
  */
 inline void ThreadMatrix::generateReduced() {
-	//cout << "Starting Thread : " << this->id << endl;
+	cout << "Starting Thread : " << this->id << endl;
+	vector<int> toReduce = this->getToReduce();
+	while (toReduce.size() > 0) {
 
-	for (int i = 0; i < this->nr; i++) {
-		vector<int> toReduce = this->getToReduce();
 		vector<int>::const_iterator cii;
+		vector<ExpThread*> tExp;
 		int size = this->M.n_rows;
 
 		for (cii = toReduce.begin(); cii != toReduce.end(); cii++) {
-			vector<int>::const_iterator expo = this->exp.begin();
 			int index_row = *cii;
-			expo++;
-
-			while (expo != this->exp.end()) {
-				int expoent = *expo;
-				arma::Row<int> reducedRow = this->reduce(this->M.row(index_row),
-						expoent);
-				this->M.insert_rows(size++, reducedRow);
-				expo++;
-
-			}
-			this->cleanReduced(index_row);
-
+			ExpThread* expT = new ExpThread(index_row, this->exp,
+					this->max_colum, this->m, this->M.row(index_row));
+			tExp.push_back(expT);
 		}
 
-		//cout << "Thread  id : " << this->id << ". In the loop " << i << " of "
-		//		<< this->nr << endl;
+		for (unsigned int j = 0; j < tExp.size(); j++) {
+			tExp[j]->start();
+		}
+		for (unsigned int j = 0; j < tExp.size(); j++) {
+			tExp[j]->join();
+		}
+		for (unsigned int j = 0; j < tExp.size(); j++) {
+			arma::Mat<int> temp = tExp[j]->getM();
+
+			for (unsigned int k = 0; k < temp.n_rows; k++) {
+				this->M.insert_rows(size++, temp.row(k));
+			}
+			this->cleanReduced(tExp[j]->getIndex());
+		}
+
+		toReduce = this->getToReduce();
 	}
-	//cout << "Thread : " << this->id << " Finish" << endl;
+	cout << "Thread : " << this->id << " Finish" << endl;
 	this->M.shed_row(0);
 }
 
