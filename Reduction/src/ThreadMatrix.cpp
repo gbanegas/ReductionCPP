@@ -18,7 +18,7 @@ ThreadMatrix::ThreadMatrix(arma::Mat<int> matrix, std::vector<int> exp, int nr,
  * Geração da redução de cada matrix
  */
 inline void ThreadMatrix::generateReduced() {
-	cout << "Starting Thread : " << this->id << endl;
+	//cout << "Starting Thread : " << this->id << endl;
 
 	for (int i = 0; i < this->nr; i++) {
 		vector<int> toReduce = this->getToReduce();
@@ -42,10 +42,10 @@ inline void ThreadMatrix::generateReduced() {
 
 		}
 
-		cout << "Thread  id : " << this->id << ". In the loop " << i << " of "
-				<< this->nr << endl;
+		//cout << "Thread  id : " << this->id << ". In the loop " << i << " of "
+		//		<< this->nr << endl;
 	}
-	cout << "Thread : " << this->id << " Finish" << endl;
+	//cout << "Thread : " << this->id << " Finish" << endl;
 	this->M.shed_row(0);
 }
 

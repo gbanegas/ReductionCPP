@@ -33,11 +33,11 @@ GenerateMatrix::~GenerateMatrix() {
 int GenerateMatrix::red() {
 	this->generateMatrix();
 
-	cout << "NR: " << calcNR(this->m, this->a) << endl;
+	//cout << "NR: " << calcNR(this->m, this->a) << endl;
 	this->nr = calcNR(this->m, this->a);
 	this->reduceFirst();
 	this->reduceOthers();
-	cout << "Reduced" << endl;
+	//cout << "Reduced" << endl;
 	this->removeRepeat();
 	//this->printMatrix();
 	this->cleanMatrix();
@@ -90,7 +90,7 @@ void GenerateMatrix::reduceOthers() {
 	std::vector<arma::Mat<int> > subMatrix = this->getSubMatrix();
 	std::vector<arma::Mat<int> >::const_iterator cii;
 	std::vector<ThreadMatrix*> objs;
-	cout << this->M << endl;
+
 	int i = 0;
 	/*for (int j = 0; j < 1; j++) {
 	 ThreadMatrix* thre = new ThreadMatrix(subMatrix[0], this->exp, this->nr, i);
@@ -217,7 +217,7 @@ void GenerateMatrix::removeRepeat() {
 		this->M.shed_row(i);
 		this->M.insert_rows(i, row);
 	}
-	cout << "Removing... end" << endl;
+	//cout << "Removing... end" << endl;
 
 }
 
