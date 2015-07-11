@@ -18,9 +18,7 @@ using namespace arma;
 class ReductionMatrixThread: public Thread {
 public:
 	void *run() {
-
 		reduce();
-		// printf("thread done %lu\n", (long unsigned int)self());
 		return NULL;
 	}
 	ReductionMatrixThread(int max_colum,arma::Row<int> rowToReduce,

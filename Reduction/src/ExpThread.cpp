@@ -19,34 +19,31 @@ ExpThread::ExpThread(int index_row, vector<int> exp, int max_column, int m,
 }
 
 ExpThread::~ExpThread() {
+	this->M.clear();
 }
 
 void ExpThread::red() {
-	vector<ReductionMatrixThread*> threads;
 	vector<int>::const_iterator expo = this->exp.begin();
-	int size = this->M.n_rows;
-
 	expo++;
-
 	while (expo != this->exp.end()) {
 		int expoent = *expo;
-		ReductionMatrixThread* thread = new ReductionMatrixThread(
-				this->max_colum, this->row, expoent, this->m);
+		int index = this->max_colum - 1;
+		arma::Row<int> rowNew(this->max_colum);
+		for (int i = 0; i < this->max_colum; i++)
+			rowNew[i] = -1;
 
-		threads.push_back(thread);
+		for (int i = this->m - 2; i >= 0; i--) {
+			int element = this->row[i];
+			int indice = index - expoent;
+
+			rowNew[indice] = element;
+			index = index - 1;
+		}
+
+		this->M.insert_rows(this->M.n_rows, rowNew);
 		expo++;
+	}
 
-	}
-	for (unsigned int i = 0; i < threads.size(); i++) {
-		threads[i]->start();
-	}
-	for (unsigned int i = 0; i < threads.size(); i++) {
-		threads[i]->join();
-	}
-	for (unsigned int i = 0; i < threads.size(); i++) {
-		this->M.insert_rows(size++, threads[i]->getRow());
-
-	}
 }
 
 arma::Mat<int> ExpThread::getM() {

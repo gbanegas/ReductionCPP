@@ -16,6 +16,7 @@ GenerateMatrix::GenerateMatrix(int m, int a, int b, int c) {
 	this->exp.push_back(0);
 	std::sort(this->exp.begin(), this->exp.end(), std::greater<int>());
 	this->max_colum = (2 * m) - 1;
+	this->nr = 0;
 }
 
 GenerateMatrix::GenerateMatrix(vector<int> exp) {
@@ -24,6 +25,7 @@ GenerateMatrix::GenerateMatrix(vector<int> exp) {
 	this->m = this->exp[0];
 	this->a = this->exp[1];
 	this->max_colum = (2 * this->m) - 1;
+	this->nr = 0;
 }
 GenerateMatrix::~GenerateMatrix() {
 
@@ -64,7 +66,7 @@ int GenerateMatrix::calculateXor(std::map<int, pair<int, int> > matches) {
 
 	int rows_size = this->M.n_rows;
 	arma::Row<int> row_first = this->M.row(0);
-	for (int j = 0; j < row_first.size(); j++) {
+	for (unsigned int j = 0; j < row_first.size(); j++) {
 		int countT = 0;
 		int element = row_first[j];
 		if (element != -1) {
@@ -110,16 +112,16 @@ void GenerateMatrix::reduceOthers() {
 		objs.push_back(thre);
 		i++;
 	}
-	for (int i = 0; i < subMatrix.size(); i++) {
+	for (unsigned int i = 0; i < subMatrix.size(); i++) {
 		objs[i]->join();
 	}
-	for (int i = 0; i < subMatrix.size(); i++) {
+	for (unsigned int i = 0; i < subMatrix.size(); i++) {
 		//cout << objs[i]->getM() << endl;
 		this->M.insert_rows(this->M.n_rows, objs[i]->getM());
 	}
 
 	cout << "DONE!!" << endl;
-	for (int i = 1; i < this->M.n_rows; i++) {
+	for (unsigned int i = 1; i < this->M.n_rows; i++) {
 		this->cleanReduced(i);
 	}
 	//this->printMatrix();
@@ -129,11 +131,11 @@ void GenerateMatrix::reduceOthers() {
 std::vector<arma::Mat<int> > GenerateMatrix::getSubMatrix() {
 	std::vector<arma::Mat<int> > matToReturn;
 	std::vector<arma::Col<int> > cols;
-	for (int i = 0; i < this->M.n_cols; i++) {
+	for (unsigned int i = 0; i < this->M.n_cols; i++) {
 		cols.push_back(this->M.col(i));
 	}
 	//this->printMatrix();
-	for (int i = 1; i < this->M.n_rows - 1; i++) {
+	for (unsigned int i = 1; i < this->M.n_rows - 1; i++) {
 		arma::Mat<int> matri = this->M.submat(i, 0, i, this->M.n_cols - 1);
 		//matri.insert_rows(matri.n_rows);
 		//cout << matri <<endl;
@@ -223,7 +225,7 @@ void GenerateMatrix::removeRepeat() {
 
 void GenerateMatrix::cleanMatrix() {
 
-	for (int i = 1; i < this->M.n_rows; i++) {
+	for (unsigned int i = 1; i < this->M.n_rows; i++) {
 		bool allZero = true;
 		arma::Row<int> row = this->M.row(i);
 		int row_size = row.size();

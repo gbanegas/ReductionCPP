@@ -13,11 +13,14 @@ ThreadMatrix::ThreadMatrix(arma::Mat<int> matrix, std::vector<int> exp, int nr,
 	this->nr = nr;
 	this->id = id;
 }
+ThreadMatrix::~ThreadMatrix() {
+	this->M.clear();
+}
 
 /**
  * Geração da redução de cada matrix
  */
-inline void ThreadMatrix::generateReduced() {
+void ThreadMatrix::generateReduced() {
 	cout << "Starting Thread : " << this->id << endl;
 	vector<int> toReduce = this->getToReduce();
 	while (toReduce.size() > 0) {
@@ -41,7 +44,6 @@ inline void ThreadMatrix::generateReduced() {
 		}
 		for (unsigned int j = 0; j < tExp.size(); j++) {
 			arma::Mat<int> temp = tExp[j]->getM();
-
 			for (unsigned int k = 0; k < temp.n_rows; k++) {
 				this->M.insert_rows(size++, temp.row(k));
 			}
@@ -70,26 +72,6 @@ inline void ThreadMatrix::cleanReduced(int index_row) {
 	this->M.insert_rows(index_row, reducedRow);
 }
 
-/**
- * Reduzir matriz
- */
-inline arma::Row<int> ThreadMatrix::reduce(arma::Row<int> rowToReduce,
-		int expoent) {
-	int index = this->max_colum - 1;
-	arma::Row<int> row(this->max_colum);
-	for (int i = 0; i < this->max_colum; i++)
-		row[i] = -1;
-
-	for (int i = this->m - 2; i >= 0; i--) {
-		int element = rowToReduce[i];
-		int indice = index - expoent;
-		//cout << "Indice " << indice << endl;
-		row[indice] = element;
-		index = index - 1;
-	}
-
-	return row;
-}
 
 /**
  * Pegar os indices das linhas que precisam ser reduzidas

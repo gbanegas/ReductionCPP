@@ -1,5 +1,4 @@
 /*
- * Otimizator.h
  *
  *  Created on: Jul 1, 2015
  *      Author: vader
@@ -26,12 +25,13 @@ public:
 	  return NULL;
    }
   ThreadMatrix(arma::Mat<int> matrix, std::vector<int> exp, int nr, int id);
-  inline void generateReduced();
+  void generateReduced();
   arma::Mat<int> getM();
+  virtual ~ThreadMatrix();
 
 private:
   inline vector<int> getToReduce();
-  inline arma::Row<int> reduce(arma::Row<int> row, int expoent);
+  //inline arma::Row<int> reduce(arma::Row<int> row, int expoent);
   //void cleanMatrix();
   void removeRepeat();
   inline void cleanReduced(int index_row);
