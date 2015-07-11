@@ -23,6 +23,8 @@ ThreadMatrix::~ThreadMatrix() {
 void ThreadMatrix::generateReduced() {
 	cout << "Starting Thread : " << this->id << endl;
 	vector<int> toReduce = this->getToReduce();
+	int temp = 0;
+
 	while (toReduce.size() > 0) {
 
 		vector<int>::const_iterator cii;
@@ -51,6 +53,8 @@ void ThreadMatrix::generateReduced() {
 		}
 
 		toReduce = this->getToReduce();
+		cout << "Thread ID: " << this->id << " loop " << temp;
+		temp++;
 	}
 	cout << "Thread : " << this->id << " Finish" << endl;
 	this->M.shed_row(0);
@@ -70,6 +74,11 @@ inline void ThreadMatrix::cleanReduced(int index_row) {
 	}
 	this->M.shed_row(index_row);
 	this->M.insert_rows(index_row, reducedRow);
+}
+
+int ThreadMatrix::calcNR(int m, int a) {
+	int nr = floor((m - 2) / (m - a))+1;
+	return nr;
 }
 
 

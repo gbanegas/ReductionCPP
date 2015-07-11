@@ -35,6 +35,7 @@ private:
   //void cleanMatrix();
   void removeRepeat();
   inline void cleanReduced(int index_row);
+  int calcNR(int m, int a);
 
   arma::Mat<int> M;
   std::vector<int> exp;
