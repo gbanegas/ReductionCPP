@@ -44,6 +44,7 @@ void ThreadMatrix::generateReduced() {
 		for (unsigned int j = 0; j < tExp.size(); j++) {
 			tExp[j]->join();
 		}
+		cout << " M mem " << this->M.mem << " MemState: " << this->M.mem_state << endl;
 		for (unsigned int j = 0; j < tExp.size(); j++) {
 			arma::Mat<int> temp = tExp[j]->getM();
 			for (unsigned int k = 0; k < temp.n_rows; k++) {
@@ -55,7 +56,7 @@ void ThreadMatrix::generateReduced() {
 		toReduce = this->getToReduce();
 		cout << "Thread ID: " << this->id << " loop " << temp;
 		temp++;
-		cout << "M mem " << this->M.mem << " MemState: " << this->M.mem_state << endl;
+		cout << " M mem " << this->M.mem << " MemState: " << this->M.mem_state << endl;
 	}
 	cout << "Thread : " << this->id << " Finish" << endl;
 	this->M.shed_row(0);
