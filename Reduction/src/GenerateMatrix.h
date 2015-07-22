@@ -14,7 +14,6 @@
 
 #include "Otimizator.h"
 
-#include "ThreadMatrix.h"
 
 using namespace std;
 using namespace arma;

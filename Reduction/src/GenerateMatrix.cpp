@@ -115,50 +115,14 @@ void GenerateMatrix::reduceOthers() {
 				this->M.insert_rows(this->M.n_rows, rowNew);
 				expo++;
 			}
-
 			this->cleanReduced(index_row);
+			this->removeRepeat();
 			index_it++;
 		}
 
 		toReduce = this->getToReduce();
 	}
-	/*std::vector<arma::Mat<int> > subMatrix = this->getSubMatrix();
-	 std::vector<arma::Mat<int> >::const_iterator cii;
-	 std::vector<ThreadMatrix*> objs;
 
-	 int i = 0;*/
-	/*for (int j = 0; j < 1; j++) {
-	 ThreadMatrix* thre = new ThreadMatrix(subMatrix[0], this->exp, this->nr, i);
-	 thre->start();
-	 objs.push_back(thre);
-	 i++;
-	 }
-	 for (int j = 0; j < 1; j++) {
-	 objs[j]->join();
-	 }
-	 for (int j = 0; j < 1; j++) {
-	 this->M.insert_rows(this->M.n_rows, objs[j]->getM());
-	 }*/
-	/*for (cii = subMatrix.begin(); cii != subMatrix.end(); ++cii) {
-	 ThreadMatrix* thre = new ThreadMatrix(*cii, this->exp, this->nr, i);
-	 thre->start();
-	 objs.push_back(thre);
-	 i++;
-	 }
-	 for (unsigned int i = 0; i < subMatrix.size(); i++) {
-	 objs[i]->join();
-	 }
-	 for (unsigned int i = 0; i < subMatrix.size(); i++) {
-	 //cout << objs[i]->getM() << endl;
-	 this->M.insert_rows(this->M.n_rows, objs[i]->getM());
-	 }
-
-	 cout << "DONE!!" << endl;
-	 for (unsigned int i = 1; i < this->M.n_rows; i++) {
-	 this->cleanReduced(i);
-	 }*/
-	//this->printMatrix();
-	//this->printMatrix();
 }
 std::vector<arma::Mat<int> > GenerateMatrix::getSubMatrix() {
 	std::vector<arma::Mat<int> > matToReturn;
@@ -223,7 +187,7 @@ void GenerateMatrix::removeRepeat() {
 	for (int i = 1; i < rows_size; i++) {
 		arma::Row<int> row = this->M.row(i);
 		int row_size = row.size();
-		for (int j = this->m - 1; j < row_size; j++) {
+		for (int j = 0; j < row_size; j++) {
 			bool found = false;
 			int valueToCompar = row[j];
 			if (valueToCompar != -1) {
