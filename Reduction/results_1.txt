@@ -1,0 +1,120 @@
+x^11 + x^6 + x^5 + x^1 + 1 
+NR: 2
+Starting Thread : 0
+Starting Thread : 1
+Starting Thread : 2
+Thread : 2 Finish
+Thread ID: 0 loop 0Thread : 0 Finish
+Thread ID: 1 loop 0Thread : 1 Finish
+DONE!!
+Cleaning... 1
+[11,6,5,1,0]:31
+x^30 + x^29 + x^28 + x^1 + 1
+NR: 29
+Starting Thread : 2Starting Thread : 
+Thread : 2 Finish
+1
+Starting Thread : 0
+Thread ID: 1 loop 0Thread ID: 0 loop 0Thread ID: 1 loop 1Thread ID: 0 loop 1Thread ID: 1 loop 2Thread ID: 0 loop 2Thread ID: 1 loop 3Thread ID: 0 loop 3Thread ID: 1 loop 4Thread ID: 0 loop 4Thread ID: 1 loop 5Thread ID: 0 loop 5Thread ID: 1 loop 6Thread ID: 0 loop 6Thread ID: 0 loop 7Thread ID: 1 loop 7Thread ID: 1 loop 8Thread ID: 0 loop 8Thread ID: 1 loop 9Thread ID: 0 loop 9Thread ID: 1 loop 10Thread ID: 0 loop 10Thread ID: 0 loop 11Thread ID: 1 loop 11Thread ID: 1 loop 12Thread ID: 0 loop 12Thread ID: 0 loop 13Thread ID: 1 loop 13Thread ID: 0 loop 14Thread ID: 1 loop 14Thread ID: 1 loop 15Thread ID: 0 loop 15
+error: arma::memory::acquire(): out of memory
+
+terminate called after throwing an instance of 'std::bad_alloc'
+  what():  std::bad_alloc
+x^11 + x^6 + x^5 + x^1 + 1 
+NR: 2
+Cleaning... 1
+[11,6,5,1,0]:31
+x^30 + x^29 + x^28 + x^1 + 1
+NR: 29
+Cleaning... 1
+[30,29,28,1,0]:94
+x^53 + x^52 + x^51 + x^1 + 1
+NR: 52
+Cleaning... 1
+[53,52,51,1,0]:171
+x^55 + x^54 + x^53 + x^1 + 1
+NR: 54
+Cleaning... 1
+[55,54,53,1,0]:193
+x^61 + x^59 + x^57 + x^2 + 1
+NR: 30
+Cleaning... 1
+[61,59,57,2,0]:178
+x^62 + x^61 + x^60 + x^1 + 1
+NR: 61
+Cleaning... 1
+[62,61,60,1,0]:201
+x^68 + x^67 + x^66 + x^1 + 1
+NR: 67
+Cleaning... 1
+[68,67,66,1,0]:221
+x^76 + x^73 + x^70 + x^3 + 1
+NR: 25
+Cleaning... 1
+[76,73,70,3,0]:222
+x^85 + x^84 + x^83 + x^1 + 1
+NR: 84
+Cleaning... 1
+[85,84,83,1,0]:303
+x^90 + x^87 + x^84 + x^3 + 1
+NR: 30
+Cleaning... 1
+[90,87,84,3,0]:302
+x^101 + x^99 + x^97 + x^2 + 1
+NR: 50
+Cleaning... 1
+[101,99,97,2,0]:298
+x^117 + x^112 + x^107 + x^5 + 1
+NR: 24
+Cleaning... 1
+[117,112,107,5,0]:343
+x^145 + x^142 + x^139 + x^3 + 1
+NR: 48
+Cleaning... 1
+[145,142,139,3,0]:429
+x^164 + x^157 + x^150 + x^7 + 1
+NR: 24
+Cleaning... 1
+[164,157,150,7,0]:482
+x^167 + x^162 + x^157 + x^5 + 1
+NR: 34
+Cleaning... 1
+[167,162,157,5,0]:493
+x^171 + x^164 + x^157 + x^7 + 1
+NR: 25
+Cleaning... 1
+[171,164,157,7,0]:503
+x^180 + x^173 + x^166 + x^7 + 1
+NR: 26
+Cleaning... 1
+[180,173,166,7,0]:530
+x^183 + x^182 + x^181 + x^1 + 1
+NR: 182
+Cleaning... 1
+[183,182,181,1,0]:604
+x^185 + x^181 + x^177 + x^4 + 1
+NR: 46
+Cleaning... 1
+[185,181,177,4,0]:548
+x^185 + x^182 + x^179 + x^3 + 1
+NR: 62
+Cleaning... 1
+[185,182,179,3,0]:549
+x^191 + x^186 + x^181 + x^5 + 1
+NR: 38
+Cleaning... 1
+[191,186,181,5,0]:565
+x^194 + x^187 + x^180 + x^7 + 1
+NR: 28
+Cleaning... 1
+[194,187,180,7,0]:572
+x^202 + x^195 + x^188 + x^7 + 1
+NR: 29
+Cleaning... 1
+[202,195,188,7,0]:596
+x^210 + x^203 + x^196 + x^7 + 1
+NR: 30
+Cleaning... 1
+[210,203,196,7,0]:718
+x^212 + x^211 + x^210 + x^1 + 1
+NR: 211
